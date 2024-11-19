@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cripto Market</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.8.0/dist/web3.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #121212;
+      color: #fff;
+    }
+    header {
+      background: #1f1f1f;
+      color: #fff;
+      padding: 20px 10px;
+      text-align: center;
+      border-bottom: 2px solid #4caf50;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background: #333;
+      padding: 10px 0;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 18px;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #4caf50;
+    }
+    main {
+      padding: 20px;
+      text-align: center;
+    }
+    .crypto-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .crypto-card {
+      background: #1f1f1f;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      transition: transform 0.2s;
+      animation: fadeInCrypto 0.3s ease-in-out;
+    }
+    .crypto-card:hover {
+      transform: scale(1.05);
+    }
+    .crypto-card img {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 10px;
+    }
+    .crypto-card button {
+      background: #4caf50;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      margin-top: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+      text-align: center;
+      display: inline-block;
+    }
+    .crypto-card button:hover {
+      background: #45a049;
+    }
+    /* Modal estilos */
+    .modal, .modal-buy {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s;
+    }
+    .modal-content, .modal-buy-content {
+      background: #1f1f1f;
+      padding: 20px;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 600px;
+      text-align: center;
+      color: #fff;
+    }
+    .modal-content h3, .modal-buy-content h3 {
+      margin-top: 0;
+    }
+    .modal-content canvas {
+      max-width: 100%;
+      margin-top: 20px;
+    }
+    .modal-content button, .modal-buy-content button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .modal-content button:hover, .modal-buy-content button:hover {
+      background: #45a049;
+    }
+    #loadingSpinner {
+      display: none;
+      text-align: center;
+      color: #4caf50;
+    }
+    /* Animação */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    @keyframes fadeInCrypto {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Cripto Market</h1>
+    <p>Explore e negocie criptomoedas em tempo real</p>
+  </header>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#cotacoes">Cotações</a>
+  </nav>
+  <main>
+    <section id="cotacoes">
+      <h2>Cotações de Criptomoedas</h2>
+      <div class="crypto-container">
+        <!-- Criptomoedas serão carregadas dinamicamente -->
+      </div>
+      <div id="loadingSpinner">Carregando...</div>
+    </section>
+  </main>
+  <footer>
+    <p>© 2024 Cripto Market. Criado para visionários.</p>
+  </footer>
+
+  <!-- Modal de Compra -->
+  <div class="modal-buy" id="buyModal">
+    <div class="modal-buy-content">
+      <h3 id="cryptoBuyName">Comprar Criptomoeda</h3>
+      <p>Escolha a quantidade que você deseja comprar:</p>
+      <input type="number" id="cryptoAmount" placeholder="Quantidade" min="0.01" step="0.01">
+      <p>Preço atual: $<span id="currentPrice"></span> USD</p>
+      <p><strong>Total: $<span id="totalPrice"></span> USD</strong></p>
+      <button id="connectWallet" class="wallet-button">Conectar Wallet</button>
+      <button id="confirmBuy" class="wallet-button">Confirmar Compra</button>
+      <button id="closeBuyModal" class="wallet-button">Fechar</button>
+    </div>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <h3 id="cryptoName">Nome da Criptomoeda</h3>
+      <p id="cryptoVolume"></p>
+      <p id="cryptoMarketCap"></p>
+      <canvas id="priceChart"></canvas>
+      <button id="closeModal" aria-label="Fechar Modal">Fechar</button>
+    </div>
+  </div>
+
+  <script>
+    const container = document.querySelector('.crypto-container');
+    const modal = document.getElementById('modal');
+    const closeModal = document.getElementById('closeModal');
+    const buyModal = document.getElementById('buyModal');
+    const closeBuyModal = document.getElementById('closeBuyModal');
+    const confirmBuy = document.getElementById('confirmBuy');
+    const connectWallet = document.getElementById('connectWallet');
+    const cryptoAmount = document.getElementById('cryptoAmount');
+    const currentPriceElement = document.getElementById('currentPrice');
+    const totalPriceElement = document.getElementById('totalPrice');
+    const cryptoBuyName = document.getElementById('cryptoBuyName');
+    const cryptoVolume = document.getElementById('cryptoVolume');
+    const cryptoMarketCap = document.getElementById('cryptoMarketCap');
+    const priceChartCanvas = document.getElementById('priceChart');
+    let priceChart;
+    let currentPage = 1;
+    const itemsPerPage = 10;
+
+    async function fetchCryptos(page = 1) {
+      const response = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${itemsPerPage}&page=${page}`);
+      return response.json();
+    }
+
+    async function loadCryptos(page = 1) {
+      document.getElementById('loadingSpinner').style.display = 'block';
+      const cryptos = await fetchCryptos(page);
+      document.getElementById('loadingSpinner').style.display = 'none';
+      cryptos.forEach(crypto => {
+        const card = document.createElement('div');
+        card.className = 'crypto-card';
+        card.innerHTML = `
+          <img src="${crypto.image}" alt="${crypto.name} logo">
+          <h3>${crypto.name} (${crypto.symbol.toUpperCase()})</h3>
+          <p>Preço: $${crypto.current_price.toLocaleString()}</p>
+          <button onclick="openBuyModal('${crypto.id}', '${crypto.name}', ${crypto.current_price})">Comprar</button>
+          <button onclick="openModal('${crypto.id}', '${crypto.name}', ${crypto.market_cap}, ${crypto.total_volume})">Ver Detalhes</button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function openBuyModal(id, name, price) {
+      cryptoBuyName.textContent = `Comprar ${name}`;
+      currentPriceElement.textContent = price.toLocaleString();
+      totalPriceElement.textContent = (parseFloat(cryptoAmount.value) * price).toFixed(2);
+      buyModal.style.display = 'flex';
+    }
+
+    function openModal(id, name, marketCap, volume) {
+      cryptoName.textContent = name;
+      cryptoMarketCap.textContent = `Market Cap: $${marketCap.toLocaleString()}`;
+      cryptoVolume.textContent = `Volume: $${volume.toLocaleString()}`;
+      loadPriceChart(id);
+      modal.style.display = 'flex';
+    }
+
+    function loadPriceChart(id) {
+      fetch(`https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=7`)
+        .then(response => response.json())
+        .then(data => {
+          if (priceChart) priceChart.destroy();
+          priceChart = new Chart(priceChartCanvas, {
+            type: 'line',
+            data: {
+              labels: data.prices.map(price => new Date(price[0]).toLocaleDateString()),
+              datasets: [{
+                label: 'Preço (USD)',
+                data: data.prices.map(price => price[1]),
+                borderColor: '#4caf50',
+                backgroundColor: 'rgba(76, 175, 80, 0.2)',
+                borderWidth: 2
+              }]
+            }
+          });
+        });
+    }
+
+    function closeModalHandler() {
+      modal.style.display = 'none';
+      buyModal.style.display = 'none';
+    }
+
+    closeModal.addEventListener('click', closeModalHandler);
+    closeBuyModal.addEventListener('click', closeModalHandler);
+
+    connectWallet.addEventListener('click', () => {
+      connectWallet.textContent = 'Conectando...';
+      connectWallet.disabled = true;
+      setTimeout(() => {
+        alert('Carteira conectada com sucesso!');
+        connectWallet.textContent = 'Conectar Wallet';
+        connectWallet.disabled = false;
+      }, 2000); // Simulação de um tempo de espera
+    });
+
+    cryptoAmount.addEventListener('input', () => {
+      const amount = parseFloat(cryptoAmount.value);
+      if (amount < 0.01 || isNaN(amount)) {
+        totalPriceElement.textContent = 'Valor inválido';
+      } else {
+        const price = parseFloat(currentPriceElement.textContent);
+        totalPriceElement.textContent = (amount * price).toFixed(2);
+      }
+    });
+
+    confirmBuy.addEventListener('click', () => {
+      const amount = parseFloat(cryptoAmount.value);
+      if (amount >= 0.01) {
+        alert(`Compra de ${amount} unidades realizada com sucesso!`);
+        buyModal.style.display = 'none'; // Fecha o modal
+      } else {
+        alert('Quantidade inválida!');
+      }
+    });
+
+    window.onscroll = async function () {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        currentPage++;
+        loadCryptos(currentPage);
+      }
+    };
+
+    loadCryptos(currentPage);
+  </script>
+</body>
+</html>
