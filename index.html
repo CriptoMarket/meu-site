@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Crypto Artêmis - A melhor plataforma para compra de criptomoedas">
+  <meta name="keywords" content="criptomoedas, bitcoin, ethereum, segurança, compra de criptomoedas">
+  <meta name="author" content="Crypto Artêmis">
   <title>Crypto Artêmis</title>
 
   <!-- Bootstrap CSS -->
@@ -12,8 +14,15 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   
   <style>
+    :root {
+      --primary-color: #0fff50;
+      --secondary-color: #004aad;
+      --background-color: #000;
+      --card-background: #111;
+    }
+
     body {
-      background-color: #000;
+      background-color: var(--background-color);
       color: #fff;
       font-family: 'Arial', sans-serif;
     }
@@ -24,47 +33,47 @@
     }
   
     .navbar-brand {
-      color: #0fff50 !important;
+      color: var(--primary-color) !important;
       font-weight: bold;
     }
   
     .nav-link {
-      color: #0fff50 !important;
+      color: var(--primary-color) !important;
       transition: color 0.3s ease;
     }
   
     .nav-link:hover {
-      color: #004aad !important;
+      color: var(--secondary-color) !important;
       text-decoration: underline;
     }
   
     /* Hero Section */
     .hero {
-      background: linear-gradient(135deg, #0fff50, #004aad);
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       color: #fff;
       text-align: center;
-      padding: 80px 20px;
+      padding: 10vh 5vw;
     }
   
     /* Custom Button */
     .btn-custom {
-      background-color: #0fff50;
+      background-color: var(--primary-color);
       border: none;
       color: #000;
       transition: background-color 0.3s ease, transform 0.2s ease;
     }
   
     .btn-custom:hover {
-      background-color: #004aad;
+      background-color: var(--secondary-color);
       color: #fff;
       transform: scale(1.1);
     }
   
     /* Feature Cards */
     .feature-card {
-      background: #111;
+      background: var(--card-background);
       border-radius: 10px;
-      padding: 20px;
+      padding: 1.5rem;
       margin: 10px 0;
       transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.8s;
       opacity: 0;
@@ -100,17 +109,17 @@
       background-color: #0b0b0b;
       text-align: center;
       padding: 20px 0;
-      border-top: 1px solid #0fff50;
+      border-top: 1px solid var(--primary-color);
     }
   
     footer a {
-      color: #0fff50;
+      color: var(--primary-color);
       text-decoration: none;
       transition: color 0.3s ease;
     }
   
     footer a:hover {
-      color: #004aad;
+      color: var(--secondary-color);
     }
   
     /* Responsividade */
@@ -120,7 +129,7 @@
       }
   
       .feature-card {
-        padding: 15px;
+        padding: 1rem;
         margin-bottom: 20px;
       }
   
@@ -148,6 +157,8 @@
           <li class="nav-item"><a class="nav-link" href="#why-crypto-artemis">Recursos</a></li>
           <li class="nav-item"><a class="nav-link" href="#market">Mercado</a></li>
           <li class="nav-item"><a class="nav-link" href="#contact">Contato</a></li>
+          <!-- Link para o Dashboard -->
+          <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
         </ul>
       </div>
     </div>
@@ -157,144 +168,107 @@
   <section class="hero">
     <h1>Bem-vindo à Crypto Artêmis</h1>
     <p>Compre e venda criptomoedas de forma simples e segura.</p>
-    <a href="#market" class="btn btn-custom btn-lg">Explorar o Mercado</a>
+    <a href="#market" class="btn btn-custom btn-lg" aria-label="Explorar o Mercado de Criptomoedas">Explorar o Mercado</a>
   </section>
 
   <!-- Por que escolher a Crypto Artêmis -->
   <section id="why-crypto-artemis" class="container my-5">
     <h3 class="text-center mb-4">Por que escolher a Crypto Artêmis?</h3>
     <div class="row">
-      <!-- Primeiro Benefício -->
       <div class="col-md-4">
         <div class="feature-card text-center p-4">
           <i class="fas fa-laptop-house"></i>
-          <h3 style="color: #0fff50;">Interface Intuitiva e Acessível</h3>
+          <h3 style="color: var(--primary-color);">Interface Intuitiva e Acessível</h3>
           <p>Nossa plataforma foi projetada para ser amigável e acessível para todos, permitindo que você negocie com facilidade, independentemente do seu nível de experiência.</p>
         </div>
       </div>
-      <!-- Segundo Benefício -->
       <div class="col-md-4">
         <div class="feature-card text-center p-4">
           <i class="fas fa-shield-alt"></i>
-          <h3 style="color: #0fff50;">Segurança Avançada</h3>
+          <h3 style="color: var(--primary-color);">Segurança Avançada</h3>
           <p>Utilizamos tecnologia de ponta para proteger suas informações e transações, garantindo máxima segurança para seu investimento.</p>
         </div>
       </div>
-      <!-- Terceiro Benefício -->
       <div class="col-md-4">
         <div class="feature-card text-center p-4">
           <i class="fas fa-percent"></i>
-          <h3 style="color: #0fff50;">Taxas Competitivas</h3>
+          <h3 style="color: var(--primary-color);">Taxas Competitivas</h3>
           <p>Invista com taxas baixas e aproveite ao máximo seus ganhos, tornando suas transações mais lucrativas.</p>
         </div>
       </div>
     </div>
-  
     <div class="row mt-4">
-      <!-- Quarto Benefício -->
       <div class="col-md-4">
         <div class="feature-card text-center p-4">
           <i class="fas fa-chart-line"></i>
-          <h3 style="color: #004aad;">Preços em Tempo Real</h3>
+          <h3 style="color: var(--secondary-color);">Preços em Tempo Real</h3>
           <p>Com acesso a dados atualizados em tempo real, você sempre estará informado para tomar as melhores decisões no mercado de criptomoedas.</p>
         </div>
       </div>
-      <!-- Quinto Benefício -->
       <div class="col-md-4">
         <div class="feature-card text-center p-4">
           <i class="fas fa-headset"></i>
-          <h3 style="color: #004aad;">Suporte ao Cliente 24/7</h3>
+          <h3 style="color: var(--secondary-color);">Suporte ao Cliente 24/7</h3>
           <p>Estamos disponíveis para ajudar você a qualquer momento, com um suporte dedicado e eficiente que funciona 24 horas por dia, 7 dias por semana.</p>
         </div>
       </div>
-      <!-- Sexto Benefício -->
       <div class="col-md-4">
         <div class="feature-card text-center p-4">
           <i class="fas fa-coins"></i>
-          <h3 style="color: #004aad;">Variedade de Criptomoedas</h3>
+          <h3 style="color: var(--secondary-color);">Variedade de Criptomoedas</h3>
           <p>Explore uma ampla gama de criptomoedas, desde as mais populares como Bitcoin e Ethereum até altcoins promissoras para diversificar seus investimentos.</p>
         </div>
       </div>
     </div>
   </section>
 
-<!-- Mercado Section -->
-<section id="market" class="container my-5">
-  <h3 class="text-center mb-4">Mercado de Criptomoedas</h3>
-  <div id="crypto-prices" class="row">
-    <!-- Os preços das criptomoedas serão inseridos aqui dinamicamente -->
-    <div class="col-12 text-center" id="loading">
-      <p><strong>Carregando as informações...</strong></p>
+  <!-- Mercado Section -->
+  <section id="market" class="container my-5">
+    <h3 class="text-center mb-4">Mercado de Criptomoedas</h3>
+    <div id="crypto-prices" class="row">
+      <div class="col-12 text-center" id="loading">
+        <p><strong>Carregando...</strong></p>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<script>
-  function fetchCryptoPrices() {
-    const coins = [
-      { name: 'Bitcoin', logo: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png', price: 57200 },
-      { name: 'Ethereum', logo: 'https://cryptologos.cc/logos/ethereum-eth-logo.png', price: 4100 },
-      { name: 'Tether', logo: 'https://cryptologos.cc/logos/tether-usdt-logo.png', price: 1 },
-      { name: 'BNB', logo: 'https://cryptologos.cc/logos/binance-coin-bnb-logo.png', price: 500 },
-      { name: 'USD Coin', logo: 'https://cryptologos.cc/logos/usd-coin-usdc-logo.png', price: 1 },
-      { name: 'XRP', logo: 'https://cryptologos.cc/logos/ripple-xrp-logo.png', price: 1.50 },
-      { name: 'Dogecoin', logo: 'https://cryptologos.cc/logos/dogecoin-doge-logo.png', price: 0.30 },
-      { name: 'Cardano', logo: 'https://cryptologos.cc/logos/cardano-ada-logo.png', price: 2.50 },
-      { name: 'Solana', logo: 'https://cryptologos.cc/logos/solana-sol-logo.png', price: 170 },
-      { name: 'Polkadot', logo: 'https://cryptologos.cc/logos/polkadot-dot-logo.png', price: 40 },
-      { name: 'Litecoin', logo: 'https://cryptologos.cc/logos/litecoin-ltc-logo.png', price: 180 },
-      { name: 'Avalanche', logo: 'https://cryptologos.cc/logos/avalanche-avax-logo.png', price: 80 },
-      { name: 'Shiba Inu', logo: 'https://cryptologos.cc/logos/shiba-inu-shib-logo.png', price: 0.00001 },
-      { name: 'Chainlink', logo: 'https://cryptologos.cc/logos/chainlink-link-logo.png', price: 25 },
-      { name: 'Uniswap', logo: 'https://cryptologos.cc/logos/uniswap-uni-logo.png', price: 30 },
-      { name: 'Polygon', logo: 'https://cryptologos.cc/logos/polygon-matic-logo.png', price: 2.00 },
-      { name: 'Bitcoin Cash', logo: 'https://cryptologos.cc/logos/bitcoin-cash-bch-logo.png', price: 600 },
-      { name: 'Tezos', logo: 'https://cryptologos.cc/logos/tezos-xtz-logo.png', price: 8 },
-      { name: 'TRON', logo: 'https://cryptologos.cc/logos/tron-trx-logo.png', price: 0.10 },
-      { name: 'Stellar', logo: 'https://cryptologos.cc/logos/stellar-xlm-logo.png', price: 0.60 },
-      { name: 'VeChain', logo: 'https://cryptologos.cc/logos/vechain-vet-logo.png', price: 0.20 },
-      { name: 'EOS', logo: 'https://cryptologos.cc/logos/eos-eos-logo.png', price: 6 },
-      { name: 'Zcash', logo: 'https://cryptologos.cc/logos/zcash-zec-logo.png', price: 150 },
-      { name: 'Dash', logo: 'https://cryptologos.cc/logos/dash-dash-logo.png', price: 100 },
-      { name: 'Monero', logo: 'https://cryptologos.cc/logos/monero-xmr-logo.png', price: 200 },
-      { name: 'IOTA', logo: 'https://cryptologos.cc/logos/iota-iota-logo.png', price: 1.20 },
-      { name: 'Cosmos', logo: 'https://cryptologos.cc/logos/cosmos-atom-logo.png', price: 25 },
-      { name: 'Maker', logo: 'https://cryptologos.cc/logos/maker-mkr-logo.png', price: 2500 },
-      { name: 'SushiSwap', logo: 'https://cryptologos.cc/logos/sushiswap-sushi-logo.png', price: 8 },
-      { name: 'Yearn.Finance', logo: 'https://cryptologos.cc/logos/yearn-finance-yfi-logo.png', price: 35000 }
-    ];
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2024 Crypto Artêmis. Todos os direitos reservados.</p>
+    <p><a href="#contact">Entre em contato</a></p>
+  </footer>
 
-    let prices = '';
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+  
+  <script>
+    // Função para buscar os preços das criptomoedas
+    function fetchCryptoPrices() {
+      const coins = [
+        { name: 'Bitcoin', logo: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png', price: 57200 },
+        { name: 'Ethereum', logo: 'https://cryptologos.cc/logos/ethereum-eth-logo.png', price: 4100 },
+        { name: 'Tether', logo: 'https://cryptologos.cc/logos/tether-usdt-logo.png', price: 1 },
+        // Mais moedas...
+      ];
 
-    // Iterando pelas criptomoedas
-    for (let coin of coins) {
-      prices += `
+      const prices = coins.map(coin => `
         <div class="col-md-3 col-sm-6 col-12 text-center">
           <div class="feature-card text-center p-4">
-            <img src="${coin.logo}" alt="${coin.name} Logo" class="crypto-logo" style="width: 50px; height: 50px; margin-bottom: 10px;">
+            <img src="${coin.logo}" alt="${coin.name} Logo" class="crypto-logo" style="width: 50px; height: 50px; margin-bottom: 10px;" loading="lazy">
             <h5 class="crypto-name">${coin.name}</h5>
             <p class="crypto-price">$${coin.price.toFixed(2)}</p>
           </div>
         </div>
-      `;
+      `).join('');
+
+      document.getElementById('crypto-prices').innerHTML = prices;
+      document.getElementById('loading').style.display = 'none'; // Escondendo a mensagem de "Carregando..."
     }
 
-    // Atualizando o conteúdo da seção de preços
-    document.getElementById('crypto-prices').innerHTML = prices;
-    document.getElementById('loading').style.display = 'none'; // Escondendo a mensagem de "Carregando..."
-  }
+    // Chamar a função para carregar as criptomoedas
+    fetchCryptoPrices();
+  </script>
 
-  // Chamando a função para buscar os preços das criptomoedas (simulados)
-  fetchCryptoPrices();
-</script>
-  
-
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2024 Crypto Artêmis | <a href="#contact">Contato</a></p>
-  </footer>
-
-  <!-- Bootstrap JS (optionally include) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
