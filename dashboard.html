@@ -3,216 +3,239 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Crypto Artêmis - Dashboard de criptomoedas">
-  <title>Dashboard - Crypto Artêmis</title>
+  <meta name="description" content="Dashboard Crypto Artêmis">
+  <meta name="author" content="Crypto Artêmis">
+  <title>Dashboard Crypto Artêmis</title>
+
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-  
+
+  <!-- ApexCharts para gráficos -->
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
   <style>
     body {
       background-color: #111;
-      color: white;
-      transition: all 0.3s ease;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+    .navbar {
+      background-color: #0b0b0b;
+    }
+    .navbar-brand {
+      color: #0fff50 !important;
     }
     .card {
-      background-color: #222;
+      background-color: #1a1a1a;
       border: none;
     }
     .card-header {
       background-color: #004aad;
-      color: white;
-      font-weight: bold;
+      color: #fff;
     }
     .card-body {
-      background-color: #333;
+      background-color: #222;
     }
     .btn-custom {
       background-color: #0fff50;
-      color: black;
-      transition: all 0.3s ease;
+      color: #000;
     }
     .btn-custom:hover {
       background-color: #004aad;
-      color: white;
+      color: #fff;
     }
-    .crypto-icon {
-      width: 40px;
-      height: 40px;
-      margin-right: 10px;
+    .chart-container {
+      position: relative;
+      height: 400px;
+      width: 100%;
     }
-    /* Modo escuro */
-    body.dark-theme {
-      background-color: #222;
-      color: white;
+    .crypto-table th, .crypto-table td {
+      color: #fff;
+      border: 1px solid #444;
     }
-    body.dark-theme .card {
+    .crypto-table tbody tr:hover {
       background-color: #333;
     }
-    body.dark-theme .card-header {
-      background-color: #004aad;
-    }
-    /* Responsividade */
-    @media (max-width: 768px) {
-      .container {
-        padding: 10px;
-      }
-      .card-body {
-        padding: 15px;
-      }
-      .btn-custom {
-        font-size: 0.9rem;
-      }
+    .crypto-table th {
+      text-align: center;
     }
   </style>
 </head>
 <body>
 
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #0b0b0b;">
+  <nav class="navbar navbar-expand-lg navbar-dark" aria-label="Navegação principal">
     <div class="container">
-      <a class="navbar-brand" href="#">Crypto Artêmis</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <a class="navbar-brand" href="index.html" aria-label="Ir para a página inicial">Crypto Artêmis</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="#portfolio">Portfólio</a></li>
-          <li class="nav-item"><a class="nav-link" href="#alerts">Alertas</a></li>
-          <li class="nav-item"><a class="nav-link" href="#settings">Configurações</a></li>
+          <li class="nav-item"><a class="nav-link" href="#overview" aria-label="Ver resumo do mercado">Resumo</a></li>
+          <li class="nav-item"><a class="nav-link" href="#charts" aria-label="Ver gráficos de trading">Gráficos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#cryptoList" aria-label="Ver lista de criptomoedas">Criptomoedas</a></li>
         </ul>
-        <!-- Botão de alternância de tema -->
-        <button id="theme-toggle" class="btn btn-dark ms-3">
-          <i id="theme-icon" class="fas fa-sun"></i> Modo Claro
-        </button>
       </div>
     </div>
   </nav>
 
-  <!-- Dashboard Header -->
-  <div class="container my-5">
-    <h1 class="text-center">Dashboard de Criptomoedas</h1>
-
-    <!-- Visão Geral -->
+  <!-- Resumo de Indicadores -->
+  <section id="overview" class="container mt-5">
+    <h2 class="text-center mb-4">Resumo do Mercado</h2>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-4 mb-4">
         <div class="card">
-          <div class="card-header">Saldo Total</div>
+          <div class="card-header">Preço Atual</div>
           <div class="card-body">
-            <h4 class="text-center" id="total-balance">$ 75,000.00</h4>
-            <p class="text-center">Valor total do seu portfólio em criptomoedas.</p>
+            <h5 class="card-title" id="price">-</h5>
+            <p class="card-text" id="lastUpdated">Última atualização: 10 minutos atrás</p>
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4 mb-4">
         <div class="card">
-          <div class="card-header">Preços em Tempo Real</div>
+          <div class="card-header">Volume de Transações</div>
           <div class="card-body">
-            <ul>
-              <li><img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" class="crypto-icon"> Bitcoin: $ 57,200.00</li>
-              <li><img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" class="crypto-icon"> Ethereum: $ 4,100.00</li>
-            </ul>
+            <h5 class="card-title" id="volume">-</h5>
+            <p class="card-text" id="lastUpdatedVolume">Última atualização: 10 minutos atrás</p>
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Ações rápidas -->
-    <div class="row mt-5">
-      <div class="col-md-4">
-        <button class="btn btn-custom btn-lg btn-block" id="buy-crypto">Comprar Criptomoedas</button>
-      </div>
-      <div class="col-md-4">
-        <button class="btn btn-custom btn-lg btn-block" id="sell-crypto">Vender Criptomoedas</button>
-      </div>
-      <div class="col-md-4">
-        <button class="btn btn-custom btn-lg btn-block" id="add-crypto">Adicionar Moeda</button>
-      </div>
-    </div>
-
-    <!-- Histórico de Transações -->
-    <div class="row mt-5">
-      <div class="col-md-12">
+      <div class="col-md-4 mb-4">
         <div class="card">
-          <div class="card-header">Histórico de Transações</div>
+          <div class="card-header">Variação (24h)</div>
           <div class="card-body">
-            <ul id="transaction-history">
-              <!-- Histórico das transações será listado aqui -->
-            </ul>
+            <h5 class="card-title" id="variation">-</h5>
+            <p class="card-text" id="lastUpdatedVariation">Última atualização: 10 minutos atrás</p>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Footer -->
-  <footer class="text-center py-4" style="background-color: #0b0b0b;">
-    <p>&copy; 2024 Crypto Artêmis | Todos os direitos reservados.</p>
-  </footer>
+  <!-- Lista de Criptomoedas -->
+  <section id="cryptoList" class="container mt-5">
+    <h2 class="text-center mb-4">Lista de Criptomoedas em Análise</h2>
+    <table class="table table-dark crypto-table">
+      <thead>
+        <tr>
+          <th>Criptomoeda</th>
+          <th>Preço</th>
+          <th>Variação (24h)</th>
+          <th>Volume</th>
+        </tr>
+      </thead>
+      <tbody id="cryptoListBody">
+        <!-- As criptomoedas serão inseridas dinamicamente aqui -->
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Gráficos de Trading -->
+  <section id="charts" class="container mt-5">
+    <h2 class="text-center mb-4">Gráfico de Trading</h2>
+    <div id="chart"></div>
+  </section>
 
   <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Função para atualizar o histórico de transações
-    function updateTransactionHistory(transaction) {
-      const historyList = document.getElementById('transaction-history');
-      const newTransaction = document.createElement('li');
-      newTransaction.textContent = transaction;
-      historyList.appendChild(newTransaction);
+    // Função para formatar valores como K, M, B (milhares, milhões, bilhões)
+    function formatNumber(value) {
+      if (value >= 1000000000) {
+        return (value / 1000000000).toFixed(1) + 'B';
+      } else if (value >= 1000000) {
+        return (value / 1000000).toFixed(1) + 'M';
+      } else if (value >= 1000) {
+        return (value / 1000).toFixed(1) + 'K';
+      }
+      return value;
     }
 
-    // Função para comprar criptomoedas
-    document.getElementById('buy-crypto').addEventListener('click', function() {
-      const crypto = prompt("Qual criptomoeda deseja comprar (bitcoin, ethereum)?").toLowerCase();
-      const amount = parseFloat(prompt("Quantos você deseja comprar?"));
-      if (crypto === 'bitcoin' || crypto === 'ethereum') {
-        alert(`Você comprou ${amount} ${crypto.charAt(0).toUpperCase() + crypto.slice(1)}!`);
-        updateTransactionHistory(`Comprou ${amount} ${crypto.charAt(0).toUpperCase() + crypto.slice(1)}.`);
-      } else {
-        alert("Criptomoeda inválida.");
-      }
-    });
+    // Função para atualizar o dashboard em tempo real
+    async function updateDashboard() {
+      // Exemplo de atualização de dados (substitua com API real)
+      const price = 45000 + (Math.random() - 0.5) * 2000; // preço simulado
+      const volume = 3000000 + (Math.random() - 0.5) * 100000; // volume simulado
+      const variation = ((Math.random() - 0.5) * 10).toFixed(2); // variação simulada
 
-    // Função para vender criptomoedas
-    document.getElementById('sell-crypto').addEventListener('click', function() {
-      const crypto = prompt("Qual criptomoeda deseja vender (bitcoin, ethereum)?").toLowerCase();
-      const amount = parseFloat(prompt("Quantos você deseja vender?"));
-      if (crypto === 'bitcoin' || crypto === 'ethereum') {
-        alert(`Você vendeu ${amount} ${crypto.charAt(0).toUpperCase() + crypto.slice(1)}!`);
-        updateTransactionHistory(`Vendeu ${amount} ${crypto.charAt(0).toUpperCase() + crypto.slice(1)}.`);
-      } else {
-        alert("Criptomoeda inválida.");
-      }
-    });
+      // Atualiza os valores na interface
+      document.getElementById('price').textContent = `$ ${formatNumber(price)}`;
+      document.getElementById('volume').textContent = `$ ${formatNumber(volume)}`;
+      document.getElementById('variation').textContent = `${variation}%`;
 
-    // Função para adicionar criptomoeda
-    document.getElementById('add-crypto').addEventListener('click', function() {
-      const crypto = prompt("Digite a criptomoeda que deseja adicionar:").toLowerCase();
-      const amount = parseFloat(prompt("Quantos você deseja adicionar?"));
-      if (crypto === 'bitcoin' || crypto === 'ethereum') {
-        alert(`Você adicionou ${amount} ${crypto.charAt(0).toUpperCase() + crypto.slice(1)} ao seu portfólio.`);
-        updateTransactionHistory(`Adicionou ${amount} ${crypto.charAt(0).toUpperCase() + crypto.slice(1)}.`);
-      } else {
-        alert("Criptomoeda inválida.");
-      }
-    });
+      // Atualiza as últimas atualizações
+      const now = new Date().toLocaleTimeString();
+      document.getElementById('lastUpdated').textContent = `Última atualização: ${now}`;
+      document.getElementById('lastUpdatedVolume').textContent = `Última atualização: ${now}`;
+      document.getElementById('lastUpdatedVariation').textContent = `Última atualização: ${now}`;
+    }
 
-    // Alternância de tema (modo claro/escuro)
-    document.getElementById('theme-toggle').addEventListener('click', function() {
-      document.body.classList.toggle('dark-theme');
-      const icon = document.getElementById('theme-icon');
-      if (document.body.classList.contains('dark-theme')) {
-        icon.classList.replace('fa-sun', 'fa-moon');
-        icon.title = "Modo Escuro";
-      } else {
-        icon.classList.replace('fa-moon', 'fa-sun');
-        icon.title = "Modo Claro";
-      }
-    });
+    // Função para preencher a lista de criptomoedas
+    async function updateCryptoList() {
+      const cryptoList = [
+        { name: "Bitcoin", price: 45000, variation: "+5%", volume: 3000000 },
+        { name: "Ethereum", price: 3000, variation: "+3%", volume: 1500000 },
+        { name: "Binance Coin", price: 400, variation: "-2%", volume: 1200000 },
+        { name: "Ripple", price: 1.2, variation: "+1%", volume: 800000 },
+        { name: "Cardano", price: 1.5, variation: "+4%", volume: 900000 },
+        { name: "Solana", price: 120, variation: "-1%", volume: 500000 },
+      ];
+
+      const listBody = document.getElementById('cryptoListBody');
+      listBody.innerHTML = ''; // Limpa a lista
+
+      cryptoList.forEach(crypto => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${crypto.name}</td>
+          <td>$ ${formatNumber(crypto.price)}</td>
+          <td>${crypto.variation}</td>
+          <td>$ ${formatNumber(crypto.volume)}</td>
+        `;
+        listBody.appendChild(row);
+      });
+    }
+
+    // Função para criar o gráfico
+    function createChart() {
+      const options = {
+        chart: {
+          type: 'line',
+          height: 350,
+        },
+        series: [{
+          name: 'Preço do Bitcoin',
+          data: Array.from({ length: 10 }, (_, i) => 45000 + (Math.random() - 0.5) * 1000),
+        }],
+        xaxis: {
+          categories: ['1h', '2h', '3h', '4h', '5h', '6h', '7h', '8h', '9h', '10h'],
+        },
+        tooltip: {
+          enabled: true,
+          y: {
+            formatter: function(value) {
+              return `$${formatNumber(value)}`;
+            },
+          },
+        },
+      };
+
+      const chart = new ApexCharts(document.querySelector("#chart"), options);
+      chart.render();
+    }
+
+    // Atualiza o dashboard e o gráfico a cada 10 segundos
+    setInterval(() => {
+      updateDashboard();
+      updateCryptoList();
+    }, 10000);
+
+    // Inicializa as funções
+    updateDashboard();
+    updateCryptoList();
+    createChart();
   </script>
 
 </body>
