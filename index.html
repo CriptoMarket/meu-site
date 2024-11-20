@@ -6,13 +6,16 @@
   <meta name="description" content="Crypto Artêmis - A melhor plataforma para compra de criptomoedas">
   <meta name="keywords" content="criptomoedas, bitcoin, ethereum, segurança, compra de criptomoedas">
   <meta name="author" content="Crypto Artêmis">
+  <meta property="og:title" content="Crypto Artêmis - Plataforma de Criptomoedas">
+  <meta property="og:image" content="https://via.placeholder.com/1200x630/000000/FFFFFF?text=Crypto+Art%C3%AEmis">
+  <meta name="twitter:card" content="summary_large_image">
   <title>Crypto Artêmis</title>
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Font Awesome Icons -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-  
+
   <style>
     :root {
       --primary-color: #0fff50;
@@ -25,50 +28,56 @@
       background-color: var(--background-color);
       color: #fff;
       font-family: 'Arial', sans-serif;
+      margin: 0;
     }
-  
+
     /* Navbar */
     .navbar {
       background-color: #0b0b0b;
     }
-  
+
     .navbar-brand {
       color: var(--primary-color) !important;
       font-weight: bold;
     }
-  
+
     .nav-link {
       color: var(--primary-color) !important;
       transition: color 0.3s ease;
     }
-  
+
     .nav-link:hover {
       color: var(--secondary-color) !important;
       text-decoration: underline;
     }
-  
+
     /* Hero Section */
     .hero {
       background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       color: #fff;
       text-align: center;
       padding: 10vh 5vw;
+      animation: slideIn 1s ease-out;
     }
-  
-    /* Custom Button */
+
+    @keyframes slideIn {
+      0% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
     .btn-custom {
       background-color: var(--primary-color);
       border: none;
       color: #000;
       transition: background-color 0.3s ease, transform 0.2s ease;
     }
-  
+
     .btn-custom:hover {
       background-color: var(--secondary-color);
       color: #fff;
       transform: scale(1.1);
     }
-  
+
     /* Feature Cards */
     .feature-card {
       background: var(--card-background);
@@ -79,20 +88,10 @@
       opacity: 0;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     }
-  
+
     .feature-card:hover {
       transform: translateY(-10px);
       box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
-    }
-
-    .feature-card:nth-child(1) {
-      animation-delay: 0.2s;
-    }
-    .feature-card:nth-child(2) {
-      animation-delay: 0.4s;
-    }
-    .feature-card:nth-child(3) {
-      animation-delay: 0.6s;
     }
 
     @keyframes fadeIn {
@@ -103,7 +102,7 @@
     .feature-card {
       animation: fadeIn 0.8s forwards;
     }
-  
+
     /* Footer */
     footer {
       background-color: #0b0b0b;
@@ -111,34 +110,34 @@
       padding: 20px 0;
       border-top: 1px solid var(--primary-color);
     }
-  
+
     footer a {
       color: var(--primary-color);
       text-decoration: none;
       transition: color 0.3s ease;
     }
-  
+
     footer a:hover {
       color: var(--secondary-color);
     }
-  
+
     /* Responsividade */
     @media (max-width: 768px) {
       .hero {
         padding: 60px 15px;
       }
-  
+
       .feature-card {
         padding: 1rem;
         margin-bottom: 20px;
       }
-  
+
       .btn-custom {
         font-size: 14px;
       }
 
       .col-md-4 {
-        width: 100%; /* 1 coluna em telas pequenas */
+        width: 100%;
       }
     }
   </style>
@@ -148,7 +147,6 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg">
     <div class="container">
-      <!-- Modificação aqui para permitir o redirecionamento ao clicar no nome do site -->
       <a class="navbar-brand" href="index.html">Crypto Artêmis</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
@@ -157,8 +155,8 @@
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="#why-crypto-artemis">Recursos</a></li>
           <li class="nav-item"><a class="nav-link" href="#market">Mercado</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about-us">Sobre Nós</a></li>
           <li class="nav-item"><a class="nav-link" href="#contact">Contato</a></li>
-          <!-- Link para o Dashboard -->
           <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
         </ul>
       </div>
@@ -169,7 +167,7 @@
   <section class="hero">
     <h1>Bem-vindo à Crypto Artêmis</h1>
     <p>Compre e venda criptomoedas de forma simples e segura.</p>
-    <a href="#market" class="btn btn-custom btn-lg" aria-label="Explorar o Mercado de Criptomoedas">Explorar o Mercado</a>
+    <a href="#market" class="btn btn-custom btn-lg">Explorar o Mercado</a>
   </section>
 
   <!-- Por que escolher a Crypto Artêmis -->
@@ -179,46 +177,43 @@
       <div class="col-md-4">
         <div class="feature-card text-center p-4">
           <i class="fas fa-laptop-house"></i>
-          <h3 style="color: var(--primary-color);">Interface Intuitiva e Acessível</h3>
-          <p>Nossa plataforma foi projetada para ser amigável e acessível para todos, permitindo que você negocie com facilidade, independentemente do seu nível de experiência.</p>
+          <h3 style="color: var(--primary-color);">Interface Intuitiva</h3>
+          <p>Plataforma amigável para todos os níveis de experiência.</p>
         </div>
       </div>
       <div class="col-md-4">
         <div class="feature-card text-center p-4">
           <i class="fas fa-shield-alt"></i>
           <h3 style="color: var(--primary-color);">Segurança Avançada</h3>
-          <p>Utilizamos tecnologia de ponta para proteger suas informações e transações, garantindo máxima segurança para seu investimento.</p>
+          <p>Transações protegidas com tecnologia de ponta.</p>
         </div>
       </div>
       <div class="col-md-4">
         <div class="feature-card text-center p-4">
           <i class="fas fa-percent"></i>
           <h3 style="color: var(--primary-color);">Taxas Competitivas</h3>
-          <p>Invista com taxas baixas e aproveite ao máximo seus ganhos, tornando suas transações mais lucrativas.</p>
+          <p>Taxas baixas para maximizar seus ganhos.</p>
         </div>
       </div>
     </div>
-    <div class="row mt-4">
-      <div class="col-md-4">
-        <div class="feature-card text-center p-4">
-          <i class="fas fa-chart-line"></i>
-          <h3 style="color: var(--secondary-color);">Preços em Tempo Real</h3>
-          <p>Com acesso a dados atualizados em tempo real, você sempre estará informado para tomar as melhores decisões no mercado de criptomoedas.</p>
-        </div>
+  </section>
+
+  <!-- Sobre Nós -->
+  <section id="about-us" class="container my-5">
+    <h3 class="text-center mb-4">Sobre Nós</h3>
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <p>
+          A <strong>Crypto Artêmis</strong> nasceu com a missão de simplificar e tornar acessível o mundo das criptomoedas 
+          para todos. Nossa plataforma oferece uma experiência segura e intuitiva, ideal para investidores de todos os níveis.
+        </p>
+        <p>
+          Trabalhamos com inovação, segurança e transparência, entregando ferramentas e suporte de qualidade para que você 
+          tome as melhores decisões e aproveite ao máximo o mercado financeiro do futuro.
+        </p>
       </div>
-      <div class="col-md-4">
-        <div class="feature-card text-center p-4">
-          <i class="fas fa-headset"></i>
-          <h3 style="color: var(--secondary-color);">Suporte ao Cliente 24/7</h3>
-          <p>Estamos disponíveis para ajudar você a qualquer momento, com um suporte dedicado e eficiente que funciona 24 horas por dia, 7 dias por semana.</p>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="feature-card text-center p-4">
-          <i class="fas fa-coins"></i>
-          <h3 style="color: var(--secondary-color);">Variedade de Criptomoedas</h3>
-          <p>Explore uma ampla gama de criptomoedas, desde as mais populares como Bitcoin e Ethereum até altcoins promissoras para diversificar seus investimentos.</p>
-        </div>
+      <div class="col-md-6 text-center">
+        <img src="https://via.placeholder.com/1200x600/000000/FFFFFF?text=Crypto+Art%C3%AEmis" alt="Banner Futurista" class="img-fluid rounded shadow">
       </div>
     </div>
   </section>
@@ -228,7 +223,7 @@
     <p>&copy; 2024 Crypto Artêmis. Todos os direitos reservados. <a href="#contact">Contato</a> | <a href="#">Política de Privacidade</a></p>
   </footer>
 
-  <!-- Bootstrap JS, Popper.js -->
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>

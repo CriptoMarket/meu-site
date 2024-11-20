@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mercado de Criptomoedas - Crypto Artêmis">
+  <meta name="keywords" content="cripto, mercado, criptomoedas, compra, ethereum, bitcoin">
+  <meta name="author" content="Crypto Artêmis">
+  <title>Mercado - Crypto Artêmis</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-color: #0fff50;
+      --secondary-color: #004aad;
+      --background-color: #000;
+      --card-background: #111;
+      --highlight-color: #ff6347;
+    }
+
+    body {
+      background-color: var(--background-color);
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .navbar {
+      background-color: #0b0b0b;
+    }
+
+    .navbar-brand {
+      color: var(--primary-color) !important;
+      font-weight: bold;
+    }
+
+    .nav-link {
+      color: var(--primary-color) !important;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--secondary-color) !important;
+      text-decoration: underline;
+    }
+
+    .search-bar {
+      margin: 20px 0;
+    }
+
+    .search-bar input {
+      font-size: 1.2rem;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .crypto-card {
+      background: var(--card-background);
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 10px 0;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .crypto-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      border: 2px solid var(--highlight-color);
+    }
+
+    .crypto-card img {
+      width: 50px;
+      height: 50px;
+      margin-right: 15px;
+      object-fit: contain;
+    }
+
+    .card-title {
+      color: var(--primary-color);
+      font-weight: bold;
+    }
+
+    .card-subtitle {
+      color: #bbb;
+    }
+
+    .card-price {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .btn-custom {
+      background-color: var(--primary-color);
+      border: none;
+      color: #000;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-custom:hover {
+      background-color: var(--secondary-color);
+      color: #fff;
+      transform: scale(1.1);
+    }
+
+    footer {
+      background-color: #0b0b0b;
+      text-align: center;
+      padding: 20px 0;
+      border-top: 1px solid var(--primary-color);
+    }
+
+    footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    footer a:hover {
+      color: var(--secondary-color);
+    }
+
+    @media (max-width: 768px) {
+      .crypto-card {
+        padding: 1rem;
+        margin-bottom: 20px;
+      }
+
+      .crypto-card img {
+        width: 40px;
+        height: 40px;
+      }
+
+      .btn-custom {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Crypto Artêmis</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+          <li class="nav-item"><a class="nav-link" href="mercado.html">Mercado</a></li>
+          <li class="nav-item"><a class="nav-link" href="#sobre-nos">Sobre Nós</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contato">Contato</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="search-bar">
+    <input type="text" class="form-control" placeholder="Buscar criptomoeda...">
+  </div>
+
+  <section class="container my-5">
+    <h3 class="text-center mb-4">Mercado de Criptomoedas</h3>
+    <div class="row" id="crypto-container">
+      <div id="loading-message" class="col-12 text-center">Carregando criptomoedas...</div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 Crypto Artêmis. Todos os direitos reservados.</p>
+    <p><a href="#contato">Contato</a> | <a href="#sobre-nos">Sobre Nós</a></p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const cryptoIds = ['bitcoin', 'ethereum', 'dogecoin']; // Adicione mais IDs aqui
+
+    function formatCurrency(value) {
+      return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+    }
+
+    function formatPercentage(value) {
+      return value.toFixed(2) + '%';
+    }
+
+    function createCryptoCard(crypto, data) {
+      const card = document.createElement('div');
+      card.classList.add('col-md-4', 'col-sm-6', 'col-12');
+      card.innerHTML = `
+        <div class="crypto-card">
+          <img src="${data.image.small}" alt="${crypto.title}">
+          <div>
+            <h5 class="card-title">${crypto.title}</h5>
+            <p class="card-price">${formatCurrency(data.market_data.current_price.brl)}</p>
+            <p class="card-subtitle">${formatPercentage(data.market_data.price_change_percentage_24h)}</p>
+            <a href="#" class="btn btn-custom">Comprar</a>
+          </div>
+        </div>`;
+      return card;
+    }
+
+    async function testApiConnection() {
+      try {
+        const response = await fetch('https://api.coingecko.com/api/v3/ping');
+        if (!response.ok) throw new Error('API indisponível');
+        console.log('Conexão com API estabelecida');
+      } catch (error) {
+        console.error('Erro ao conectar na API:', error);
+        document.getElementById('loading-message').innerText = 'Erro ao carregar dados da API.';
+      }
+    }
+
+    async function loadCryptos() {
+      const loadingMessage = document.getElementById('loading-message');
+      const cryptoContainer = document.getElementById('crypto-container');
+      loadingMessage.style.display = 'block';
+
+      for (let i = 0; i < cryptoIds.length; i++) {
+        try {
+          const response = await fetch(`https://api.coingecko.com/api/v3/coins/${cryptoIds[i]}`);
+          if (!response.ok) throw new Error('Erro ao buscar dados');
+          const data = await response.json();
+          const crypto = { title: `${data.name} (${data.symbol.toUpperCase()})` };
+          const card = createCryptoCard(crypto, data);
+          cryptoContainer.appendChild(card);
+        } catch (error) {
+          console.error('Erro ao buscar dados:', error);
+        }
+      }
+      loadingMessage.style.display = 'none';
+    }
+
+    document.querySelector('.search-bar input').addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      document.querySelectorAll('.crypto-card').forEach(card => {
+        const title = card.querySelector('.card-title').innerText.toLowerCase();
+        card.style.display = title.includes(query) ? 'flex' : 'none';
+      });
+    });
+
+    testApiConnection().then(loadCryptos);
+  </script>
+
+</body>
+</html>
